@@ -15,9 +15,16 @@ real = data["real"]
 amount = data["amount"]
 my_wallet = data["my_wallet"]
 my_secret = data["my_secret"]
+gasPrice = int(data["gasPrice"])
+
+
+
+
+
 
 bsc = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(bsc))
+
 
 export = {}
 
@@ -43,7 +50,9 @@ humanReadable = web3.fromWei(balance,'ether')
 export["humanReadable"]=(str(humanReadable))
 
 
-tokenToBuy = web3.toChecksumAddress(token) 
+ 
+#Contract Address of Token we want to buy
+tokenToBuy = web3.toChecksumAddress(token)            #web3.toChecksumAddress("0x6615a63c260be84974166a5eddff223ce292cf3d")
 
 export["token"] = token
 
@@ -84,13 +93,13 @@ txn = contract.functions.swapExactETHForTokens(
 	(int(time.time()) + 10000)
         ).buildTransaction(
             {'from': sender_address, 
-            'gas': 32000,
-            'gasPrice': web3.toWei('5','gwei'),
+            'gas': 500000,
+            'gasPrice': web3.toWei(gasPrice,'gwei'),
             'nonce': nonce,
             'value': web3.toWei(amount,'ether')
             })
 			
-txn.update({ 'gas' : int(estimateGas(txn))})
+# txn.update({ 'gas' : int(estimateGas(txn))})
 	
 
 export["txn"] =(str(txn))
