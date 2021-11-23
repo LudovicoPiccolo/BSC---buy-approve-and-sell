@@ -6,6 +6,9 @@ from datetime import datetime
 import pytz
 
 
+
+
+
 export = {}
 
 it = pytz.timezone('Europe/Rome')
@@ -18,7 +21,7 @@ token = data["token"]
 my_wallet = data["my_wallet"]
 my_secret = data["my_secret"]
 real = data["real"]
-
+gasPrice = data["gasPrice"]
 
 
 bsc = "https://bsc-dataseed.binance.org/"
@@ -69,7 +72,7 @@ tokenValue = web3.toWei(readable, 'ether')
 
 approve = sellTokenContract.functions.approve(panRouterContractAddress, balance).buildTransaction({
             'from': my_wallet,
-            'gasPrice': web3.toWei('5','gwei'),
+            'gasPrice': web3.toWei(gasPrice,'gwei'),
             'nonce': web3.eth.get_transaction_count(my_wallet),
             })
 
