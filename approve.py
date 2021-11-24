@@ -92,6 +92,7 @@ time.sleep(10)
 export["balance"] = (str(readable))
 export["tosell"] = str(tokenValue)
 export["approve"] = (str(approve))
-export["approved"] = (str(web3.toHex(tx_token)))
+export["tx"] = (str(web3.toHex(tx_token)))
+export["op"] ="approve"
 print(json.dumps(export))
 sys.exit()
