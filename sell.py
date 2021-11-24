@@ -91,7 +91,7 @@ while True:
         break
 
     if i == 15:
-        export["op"] ="failed_sell"
+        export["op"] ="failed"
         print(json.dumps(export))
         sys.exit()   
 
@@ -116,10 +116,10 @@ time.sleep(20)
 
 export["signed_txn"] = (str(signed_txn))
 export["tx_token"] = (str(tx_token))
-
 date_time = datetime.now(it).strftime("%m/%d/%Y, %H:%M:%S")
 export["date_end"] =(str(date_time))
-export["op"] ="buy"
+export["tx"] = (str(web3.toHex(tx_token)))
+export["op"] ="sell"
 
 print(json.dumps(export))
 sys.exit()
