@@ -77,13 +77,17 @@ export["nonce"] = (str(nonce))
 
 
 def estimateGas( txn):
+    try:
         gas = web3.eth.estimateGas({
                     "from": txn['from'],
                     "to": txn['to'],
                     "value": txn['value'],
                     "data": txn['data']})
         gas = gas + (gas / 10) # Adding 1/10 from gas to gas!
-        return gas
+    except:
+        gas = False
+    return gas
+
 
 
 txn = contract.functions.swapExactETHForTokens(
@@ -100,35 +104,38 @@ txn = contract.functions.swapExactETHForTokens(
             })
 			
 # txn.update({ 'gas' : int(estimateGas(txn))})
-	
-
-export["txn"] =(str(txn))
-export["getAmountsOutA"] =(str(contract.functions.getAmountsOut(1, [spend, tokenToBuy]).call()))
-export["getAmountsOutB"] =(str(contract.functions.getAmountsOut(1, [tokenToBuy,spend]).call()))
-
-
-if real != "1":
-        export["op"] ="sim_buy"
+if estimateGas(txn) == False:
+        export["txn"] = "failed"
         print(json.dumps(export))
         sys.exit()
-
-   
-signed_txn = web3.eth.account.sign_transaction(txn, private_key=my_secret)
-tx_token = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
-
-
-export["before"] = (str(web3.toHex(tx_token)))
+else:
+        export["txn"] =(str(txn))
+        export["getAmountsOutA"] =(str(contract.functions.getAmountsOut(1, [spend, tokenToBuy]).call()))
+        export["getAmountsOutB"] =(str(contract.functions.getAmountsOut(1, [tokenToBuy,spend]).call()))
 
 
-txn_receipt = web3.eth.waitForTransactionReceipt(tx_token)
+        if real != "1":
+                export["op"] ="sim_buy"
+                print(json.dumps(export))
+                sys.exit()
 
-time.sleep(20)
+        
+        signed_txn = web3.eth.account.sign_transaction(txn, private_key=my_secret)
+        tx_token = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
 
 
-export["after"] = (str(txn_receipt))
+        export["before"] = (str(web3.toHex(tx_token)))
 
-date_time = datetime.now(it).strftime("%m/%d/%Y, %H:%M:%S")
-export["date_end"] =(str(date_time))
-export["op"] ="buy"
+        txn_receipt = web3.eth.waitForTransactionReceipt(tx_token)
 
-print(json.dumps(export))
+        time.sleep(20)
+
+
+        export["after"] = (str(txn_receipt))
+        
+        date_time = datetime.now(it).strftime("%m/%d/%Y, %H:%M:%S")
+        export["date_end"] =(str(date_time))
+        export["tx"] = (str(web3.toHex(tx_token)))
+        export["op"] ="buy"
+
+        print(json.dumps(export))
