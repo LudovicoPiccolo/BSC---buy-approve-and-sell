@@ -23,7 +23,7 @@
 
 
 ## buy.py
-  Buy crypto currency
+  Buy crypto currency. python script to buy token from pancakeswap
   run the command: 
   ```
   python3 /test/buy.py {
@@ -48,7 +48,7 @@
   
   
 ## approve.py
-  Approve a crypto currency before selling it
+  Approve a crypto currency before selling it. python script to approve token from pancakeswap
   
   run the command: 
   ```
@@ -75,7 +75,7 @@
 
   
 ## sell.py
-  Sell crypto currency
+  Sell crypto currency. python script to sell token from pancakeswap
   run the command: 
   ```
   python3 /test/sell.py {
