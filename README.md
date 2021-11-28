@@ -76,3 +76,18 @@
   
 ## sell.py
   Sell crypto currency
+  run the command: 
+  ```
+  python3 /test/sell.py {
+                    "token":"0xfb1a34eb2585b0ad7976420d7a21ef2f4aebeeb6",
+                    "amount":"0.1",
+                    "op":"sell",
+                    "real":"0",
+                    "my_wallet":"MY WALLER ADRESS",
+                    "my_secret":"MY SECRET",
+                    "gasPrice":"7"
+                    }
+  ```
+ the script responds with a json with all the transaction information
+
+  
