@@ -1,6 +1,6 @@
 # BSC---buy-approve-and-sell
 
-check-price.py
+## check-price.py
   check the price of a crypto currency
   ```
   run the command: check-price.py 0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82
@@ -22,7 +22,7 @@ check-price.py
 
 
 
-buy.py
+## buy.py
   Buy crypto currency
   run the command: 
   ```
@@ -47,7 +47,7 @@ buy.py
   
   
   
-approve.py
+## approve.py
   Approve a crypto currency before selling it
   
   run the command: 
@@ -74,5 +74,5 @@ approve.py
 
 
   
-sell.py
+## sell.py
   Sell crypto currency
