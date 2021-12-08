@@ -8,6 +8,10 @@ import pytz
 
 data=json.loads(sys.argv[1])
 
+
+
+
+
 token = data["token"]
 
 
@@ -24,6 +28,17 @@ gasPrice = int(data["gasPrice"])
 
 bsc = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    bsc = "https://bsc-dataseed1.defibit.io/"
+    web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    export["humanReadable"]="Errore connessione"
+    print(json.dumps(export))
+    sys.exit()
+
+
 
 
 export = {}
@@ -91,7 +106,10 @@ txn = contract.functions.swapExactETHForTokens(
             'nonce': nonce,
             'value': web3.toWei(amount,'ether')
             })
-			
+
+
+
+
 # txn.update({ 'gas' : int(estimateGas(txn))})
 if estimateGas(txn) == False:
         export["txn"] = "failed"
