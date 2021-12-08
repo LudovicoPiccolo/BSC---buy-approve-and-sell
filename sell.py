@@ -32,6 +32,19 @@ tokenNameABI = json.loads(
 
 bsc = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    bsc = "https://bsc-dataseed1.defibit.io/"
+    web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    export["humanReadable"]="Errore connessione"
+    print(json.dumps(export))
+    sys.exit()
+
+
+
+
 transactionRevertTime = 10000
 pancakeSwapRouterAddress = "0x10ED43C718714eb63d5aA57B78B54704E256024E"
 
