@@ -16,10 +16,20 @@ tokenAbi = '[{"inputs":[{"internalType":"string","name":"_name","type":"string"}
 
 
 
-export["token"]=token
+
 
 bsc = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    bsc = "https://bsc-dataseed1.defibit.io/"
+    web3 = Web3(Web3.HTTPProvider(bsc))
+
+if not web3.isConnected():
+    export["humanReadable"]="Errore connessione"
+    print(json.dumps(export))
+    sys.exit()
+
 
 
 pancakeSwapContract = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
@@ -33,6 +43,7 @@ txn = router.functions.getAmountsOut(bnbToSell, [BNBTokenAddress ,USDTokenAddres
 humanReadable = web3.fromWei(txn[1],'ether')
 
 token = Web3.toChecksumAddress(token)
+export["token"]=token
 
 routertoken = web3.eth.contract(address=token, abi=tokenAbi)
 decimals = routertoken.functions.decimals().call()
@@ -65,3 +76,4 @@ usdt=humanReadableSC*humanReadable
 export["priceUSDT"]=f"{usdt:.20f}"
 
 print(json.dumps(export))
+sys.exit()
