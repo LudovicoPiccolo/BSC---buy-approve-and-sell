@@ -8,10 +8,6 @@ import pytz
 
 data=json.loads(sys.argv[1])
 
-
-
-
-
 token = data["token"]
 
 
@@ -40,13 +36,13 @@ if not web3.isConnected():
 
 
 
-
 export = {}
 
 it = pytz.timezone('Europe/Rome')
 date_time = datetime.now(it).strftime("%m/%d/%Y, %H:%M:%S")
 export["date_start"] =(str(date_time))
 
+export["amount"]=(str(amount))
 
 #pancakeswap router
 panRouterContractAddress = '0x10ED43C718714eb63d5aA57B78B54704E256024E'
@@ -94,22 +90,19 @@ def estimateGas( txn):
 
 
 
-txn = contract.functions.swapExactETHForTokens(
+txn = contract.functions.swapExactETHForTokensSupportingFeeOnTransferTokens(
 	0, # set to 0, or specify minimum amount of tokeny you want to receive - consider decimals!!!
 	[spend,tokenToBuy],
 	my_wallet,
 	(int(time.time()) + 10000)
         ).buildTransaction(
             {'from': my_wallet, 
-            'gas': 500000,
+            'gas': 2000000,
             'gasPrice': web3.toWei(gasPrice,'gwei'),
             'nonce': nonce,
             'value': web3.toWei(amount,'ether')
             })
-
-
-
-
+			
 # txn.update({ 'gas' : int(estimateGas(txn))})
 if estimateGas(txn) == False:
         export["txn"] = "failed"
